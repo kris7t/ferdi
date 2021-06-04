@@ -145,7 +145,7 @@ export default @inject('stores', 'actions') @observer class ServiceView extends 
           </Fragment>
         ) : (
           <>
-            {(!service.isHibernating || service.isHibernationEnabled) ? (
+            {(!service.isHibernating || !service.isHibernationEnabled) ? (
               <>
                 {showNavBar && (
                   <WebControlsScreen service={service} />
