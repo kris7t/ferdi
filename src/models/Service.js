@@ -42,8 +42,6 @@ export default class Service {
 
   @observable isMuted = false;
 
-  @observable isHibernating = false;
-
   @observable team = '';
 
   @observable customUrl = '';
@@ -82,7 +80,7 @@ export default class Service {
 
   @observable isHibernationEnabled = false;
 
-  @observable isHibernating = false;
+  @observable isHibernationRequested = false;
 
   @observable lastUsed = Date.now(); // timestamp
 
@@ -153,7 +151,7 @@ export default class Service {
     // The service store is probably not loaded yet so we need to use localStorage data to get active service
     const isActive = window.localStorage.service && JSON.parse(window.localStorage.service).activeService === this.id;
     if (hibernate && hibernateOnStartup && !isActive) {
-      this.isHibernating = true;
+      this.isHibernationRequested = true;
     }
 
     this.userAgentModel = new UserAgent(recipe.overrideUserAgent);
@@ -186,6 +184,14 @@ export default class Service {
 
   @computed get isTodosService() {
     return this.recipe.id === todosStore.todoRecipeId;
+  }
+
+  @computed get canHibernate() {
+    return window.ferdi.stores.settings.app.hibernate && this.isHibernationEnabled;
+  }
+
+  @computed get isHibernating() {
+    return this.canHibernate && this.isHibernationRequested;
   }
 
   get webview() {
