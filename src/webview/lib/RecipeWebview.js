@@ -1,5 +1,5 @@
 import { ipcRenderer } from 'electron';
-import { pathExistsSync, readFile } from 'fs-extra';
+import { exists, pathExistsSync, readFile } from 'fs-extra';
 
 const debug = require('debug')('Ferdi:Plugin:RecipeWebview');
 
@@ -68,8 +68,8 @@ class RecipeWebview {
 
   injectJSUnsafe(...files) {
     Promise.all(files.map(async (file) => {
-      if (await fs.exists(file)) {
-        const data = await fs.readFile(file, 'utf8');
+      if (await exists(file)) {
+        const data = await readFile(file, 'utf8');
         return data;
       }
       debug('Script not found', file);
