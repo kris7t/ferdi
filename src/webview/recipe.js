@@ -199,7 +199,11 @@ class RecipeController {
     // Delete module from cache
     delete require.cache[require.resolve(modulePath)];
     try {
-      this.recipe = new RecipeWebview(badgeHandler, notificationsHandler);
+      this.recipe = new RecipeWebview(
+        badgeHandler,
+        notificationsHandler,
+        sessionHandler,
+      );
       // eslint-disable-next-line import/no-dynamic-require
       require(modulePath)(this.recipe, { ...config, recipe });
       debug('Initialize Recipe', config, recipe);
