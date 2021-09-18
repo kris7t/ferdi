@@ -108,7 +108,6 @@ contextBridge.exposeInMainWorld('ferdi', {
   safeParseInt: text => badgeHandler.safeParseInt(text),
   displayNotification: (title, options) =>
     notificationsHandler.displayNotification(title, options),
-  releaseServiceWorkers: () => sessionHandler.releaseServiceWorkers(),
   getDisplayMediaSelector,
 });
 
